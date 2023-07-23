@@ -52,7 +52,23 @@ const VoiceActivitySchema = new Schema({
     }
 }, { timestamps: true })
 
+const MemberLeaveSchema = new Schema({
+    user_id: {
+        type: Number,
+        required: true
+    },
+    guild_id: {
+        type: Number,
+        required: true
+    },
+    join_date: {
+        type: Date,
+        required: true
+    }
+}, { timestamps: true } )
+
 const Message       = mongoose.model('Message', MessageSchema)
 const VoiceActivity = mongoose.model('VoiceActivity', VoiceActivitySchema)
+const MemberLeave   = mongoose.model('MemberLeave', MemberLeaveSchema)
 
-module.exports = { Message, VoiceActivity }
+module.exports = { Message, VoiceActivity, MemberLeave }

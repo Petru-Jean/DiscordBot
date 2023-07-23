@@ -116,6 +116,7 @@ class DiscordBot extends EventEmitter {
                 this.emit(json.t, JSON.parse(event.data));
                 console.log(json.t);
             }
+            console.log(eventName);
         }
         else {
             if (json.op == 10) {
@@ -163,6 +164,9 @@ class DiscordBot extends EventEmitter {
                 }
                 else if (this.socket.readyState == WebSocket.CLOSED) {
                     console.log("Attempting to resume connection with session id:" + this.sessionId);
+                    // if u can reconnect and resume,
+                    // reconnec tusing resume_gateway_url and sesion_id
+                    //ele
                     try {
                         this.socket = new WebSocket(this.resumeURL);
                     }

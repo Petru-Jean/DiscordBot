@@ -174,6 +174,8 @@ OnMessageRecieve(event: any)
             console.log(json.t)
         }
 
+        console.log(eventName)
+
     }
     else
     {
@@ -250,7 +252,10 @@ async Connect()
         else if (this.socket.readyState == WebSocket.CLOSED)
         {
             console.log("Attempting to resume connection with session id:" + this.sessionId)
-            
+            // if u can reconnect and resume,
+            // reconnec tusing resume_gateway_url and sesion_id
+
+            //ele
             try
             {
                 this.socket = new WebSocket(this.resumeURL)    

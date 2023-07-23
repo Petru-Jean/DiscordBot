@@ -55,22 +55,25 @@ class EventLogger {
             if (this.flags && !(this.flags & Events.Messages)) {
                 return;
             }
-            if (message.d.member) {
-                let author = message.d.author.global_name;
-                if (message.d.member.nick) {
-                    author = message.d.member.nick;
-                }
-                const msg = new Message({
-                    guild_id: message.d.guild_id,
-                    message_id: message.d.id,
-                    user_id: message.d.author.id,
-                    user_nick: author,
-                    content: message.d.content ? message.d.content : "",
-                });
-                msg.save().then(() => { }).catch((error) => {
-                    console.log("Failed to log message: " + error);
-                });
+            // make sure the message is not sent from webhook
+            // or ephemeral 
+            if (!message.d.guild_id || !message.d.member) {
+                return;
             }
+            let author = message.d.author.global_name;
+            if (message.d.member.nick) {
+                author = message.d.member.nick;
+            }
+            const msg = new Message({
+                guild_id: message.d.guild_id,
+                message_id: message.d.id,
+                user_id: message.d.author.id,
+                user_nick: author,
+                content: message.d.content ? message.d.content : "",
+            });
+            msg.save().then(() => { }).catch((error) => {
+                console.log("Failed to log message: " + error);
+            });
         });
         this.bot.on(DiscordBotAPI_1.DispatchEvents.VoiceStateUpdate, (event) => {
             if (this.flags && !(this.flags & Events.VoiceChat)) {
