@@ -1,4 +1,3 @@
-import { parse } from "dotenv";
 import { Client, GatewayDispatchEvent } from "../Client";
 import { EventHandler } from "../EventHandler";
 import { RequestOptions } from "../Rest";
@@ -151,7 +150,10 @@ export class StatsCommandHandler extends CommandHandler
 
             if (guildUser)
             {
-                let joinDate     = Date.now() //guildUser.joinDate;
+                // Date when bot started running [30 Aug 2023]
+                let botStartDate = 1693400400000
+                
+                let joinDate     = 1693400400000
                 let daysInGuild  = Math.max(1, Date.now() - joinDate)
                 
                 let dailyMsgCount  = Math.round(messageCount / daysInGuild)

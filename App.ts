@@ -9,7 +9,7 @@ import * as EventHandlers from './EventHandlers/EventHandlers'
 import { Client, ClientConfig, GatewayDispatchEvent }  from './Client'
 import { Rest }                         from './Rest'
 import { CommandHandler } from "./CommandHandler";
-import { StatsCommandHandler } from "./EventHandlers/StatsCommandHandler";
+import { StatsCommandHandler } from "./CommandHandlers/StatsCommandHandler";
 
 import * as Redis from 'redis';
 
@@ -17,7 +17,7 @@ const db  = require('./db')
 
 let redis: Redis.RedisClientType = Redis.createClient();
 
-redis.on('error', err => { throw new Error(err) });
+redis.on('error', (err : any) => { throw new Error(err) });
 
 redis.connect()
 .then(() => { console.log("Redis client connected.") })
@@ -41,7 +41,6 @@ const commandHandlers : Array<CommandHandler> =
 const eventHandlers : Array<EventHandler> =
 [
     new EventHandlers.MessageCreateHandler(),
-    new EventHandlers.MockHandler(),
     new EventHandlers.VoiceActivityHandler(),
     new EventHandlers.MessageReactionAddHandler(),
     new EventHandlers.MessageReactionRemoveHandler()
