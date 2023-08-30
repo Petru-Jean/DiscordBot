@@ -1,10 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ExMembers = exports.VoiceActivity = exports.Message = exports.ExMemberSchema = exports.VoiceActivitySchema = exports.MessageSchema = void 0;
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const db = require('./db');
-exports.MessageSchema = new Schema({
+import { ObjectId } from "mongodb"
+
+const mongoose = require('mongoose')
+const Schema   = mongoose.Schema
+const db = require('./db')
+
+export const MessageSchema = new Schema({
     guild_id: {
         type: String,
         required: true
@@ -29,8 +29,9 @@ exports.MessageSchema = new Schema({
         type: Array,
         required: false
     }
-}, { timestamps: true });
-exports.VoiceActivitySchema = new Schema({
+}, {timestamps: true })
+
+export const VoiceActivitySchema = new Schema({
     guild_id: {
         type: String,
         required: true
@@ -47,8 +48,9 @@ exports.VoiceActivitySchema = new Schema({
         type: Date,
         required: true
     }
-}, { timestamps: true });
-exports.ExMemberSchema = new Schema({
+}, { timestamps: true })
+
+export const ExMemberSchema = new Schema({
     guild_id: {
         type: String,
         required: true
@@ -61,7 +63,9 @@ exports.ExMemberSchema = new Schema({
         type: Date,
         required: true
     }
-}, { timestamps: true });
-exports.Message = db.mongoose.model('Message', exports.MessageSchema);
-exports.VoiceActivity = db.mongoose.model('VoiceActivity', exports.VoiceActivitySchema);
-exports.ExMembers = db.mongoose.model('ExMembers', exports.ExMemberSchema);
+}, { timestamps: true } )
+
+
+export const Message       = db.mongoose.model('Message', MessageSchema)
+export const VoiceActivity = db.mongoose.model('VoiceActivity', VoiceActivitySchema)
+export const ExMembers   = db.mongoose.model('ExMembers', ExMemberSchema)
