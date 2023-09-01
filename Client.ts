@@ -45,11 +45,12 @@ export enum GatewayDispatchEvent
 
 export class Client extends EventEmitter
 {
+    public clientConfig: ClientConfig
+    
     private cluster: ShardCluster
     public  rest:    Rest
-    public cache:    ClientCache
     
-    public clientConfig: ClientConfig
+    public  cache:   ClientCache
     
     constructor(clientConfig : ClientConfig, redisClient : Redis.RedisClientType, rest : Rest)
     {
@@ -65,6 +66,7 @@ export class Client extends EventEmitter
 
     public Start(shards : number = 0)
     {
+
         this.cluster.Create(shards)
     }
 

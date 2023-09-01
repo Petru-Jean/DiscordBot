@@ -1,53 +1,47 @@
 require('dotenv').config();
 require('console-stamp')(console, '[HH:MM:ss.l]');
 
-import { EventMiddleman } from "./EventMiddleman"
-import { EventHandler   } from "./EventHandler";
-
-import * as EventHandlers from './EventHandlers/EventHandlers'
-
-import { Client, ClientConfig, GatewayDispatchEvent }  from './Client'
-import { Rest }                         from './Rest'
-import { CommandHandler } from "./CommandHandler";
-import { StatsCommandHandler } from "./CommandHandlers/StatsCommandHandler";
+import { Client, ClientConfig }  from './Client'
+import { Rest }                  from './Rest'
 
 import * as Redis from 'redis';
 
-const db  = require('./db')
+import { ActivityBot } from "./ActivityBot";
 
-let redis: Redis.RedisClientType = Redis.createClient();
+(async () => {
+    
+let redisPort = Number(process.env.REDIS_PORT ?? 6379)
+let redisHost = process.env.REDIS_HOST        ?? 'redis'
 
-redis.on('error', (err : any) => { throw new Error(err) });
+let redis: Redis.RedisClientType = Redis.createClient(
+{
+socket: {
+    port: redisPort,
+    host: redisHost
+}
+}
+)
 
-redis.connect()
-.then(() => { console.log("Redis client connected.") })
-.catch((error: any) => { throw new Error(`Redis error: ${error}`) });
+redis.on('error', (err: any) => { throw new Error(err) });
+    
+await redis.connect()
+.catch((error: any) =>
+{
+    throw new Error(`Redis error: ${error}`)
+});
 
 const config: ClientConfig =
 {
     authToken:       process.env.AUTH_TOKEN ?? "",  
     intent:          131071,
-    reconnectDelay:  5000
+    reconnectDelay:  5000   
 };
 
-const rest   = new Rest()
-const client = new Client(config, redis, rest)
+const client = new Client(config, redis, new Rest())
 
-const commandHandlers : Array<CommandHandler> =
-[
-    new StatsCommandHandler(client)
-]
-
-const eventHandlers : Array<EventHandler> =
-[
-    new EventHandlers.MessageCreateHandler(),
-    new EventHandlers.VoiceActivityHandler(),
-    new EventHandlers.MessageReactionAddHandler(),
-    new EventHandlers.MessageReactionRemoveHandler()
-]
+new ActivityBot(client).Init().then(() => {
+    client.Start()
+})
 
 
-new EventMiddleman(client, eventHandlers, commandHandlers).Hook()
-
-
-client.Start()
+})()

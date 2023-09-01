@@ -20,7 +20,6 @@ export class EventMiddleman
 
     Hook()
     {
-        
         for (let handler of this.eventHandlers)
         {
             this.client.on(handler.GetEventType(), (eventData: string) => handler.OnEvent(eventData))

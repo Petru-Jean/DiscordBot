@@ -100,7 +100,7 @@ export class Shard extends EventEmitter
         {
             return
         }
-
+        
         clearTimeout(this.sessionData.heartbeatTimeout)
 
         this.shardStatus                  = ShardStatus.DISCONNECTED
@@ -137,6 +137,9 @@ export class Shard extends EventEmitter
 
         this.sessionData.heartbeatTimeout = setTimeout(() =>
         {
+            if (!this.socket || this.socket.readyState != WebSocket.OPEN)
+                return
+            
             // Send heartbeat event
             this.socket?.send(JSON.stringify(
                 {
@@ -201,6 +204,7 @@ export class Shard extends EventEmitter
 
     private OnSocketOpen(data : any)
     {
+        
         if (this.sessionData.shardDestroyData && this.sessionData.shardDestroyData.recovery === ShardRecoveryMethod.RESUME)
         {
             return this.Resume()
@@ -213,6 +217,8 @@ export class Shard extends EventEmitter
     {
         console.log(`[Shard ${this.shardId}/${this.shardCount}] Shard destroyed: ` + (this.sessionData.shardDestroyData ? this.sessionData.shardDestroyData.reason : `connection closed by server (${data.code})`))
 
+        clearTimeout(this.sessionData.heartbeatTimeout)
+        
         let recoveryMethod = this.sessionData.shardDestroyData ? this.sessionData.shardDestroyData.recovery : ShardRecoveryMethod.RESUME
         
         if (recoveryMethod === ShardRecoveryMethod.NONE)
@@ -226,7 +232,7 @@ export class Shard extends EventEmitter
         }    
 
         console.log(`[Shard ${this.shardId}/${this.shardCount}] Reconnecting to the WebSocket Gateway`)
-
+        
         await promiseTimeout(2500).then(() =>
         {
             this.Connect(recoveryMethod === ShardRecoveryMethod.RESUME ? this.sessionData.resumeURL : undefined)
@@ -358,7 +364,7 @@ export class Shard extends EventEmitter
         try
         {     
             this.socket = new WebSocket(url)
-
+            
             console.log(`[Shard ${this.shardId}/${this.shardCount}] WebSocket connection estabilished: ${url}`)
         }
         catch (exception: any)

@@ -1,5 +1,5 @@
 {
-  "start": "app.js",
+  "main": "app.js",
   "dependencies": {
     "amd-loader": "^0.0.8",
     "console-stamp": "^3.1.2",
@@ -15,8 +15,7 @@
   },
   "scripts": {
     "build": "tsc --build",
-    "clean": "tsc --build --clean",
-    "test": "jest"
+    "clean": "tsc --build --clean"
   },
   "devDependencies": {
     "@types/node": "^20.4.10",

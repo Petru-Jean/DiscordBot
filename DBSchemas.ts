@@ -1,8 +1,5 @@
-import { ObjectId } from "mongodb"
-
 const mongoose = require('mongoose')
 const Schema   = mongoose.Schema
-const db = require('./db')
 
 export const MessageSchema = new Schema({
     guild_id: {
@@ -17,10 +14,6 @@ export const MessageSchema = new Schema({
         type: String,
         required: true
     },
-    // user_nick: {
-    //     type: String,
-    //     required: true
-    // },
     content: {
         type: String,
         required: false
@@ -66,6 +59,6 @@ export const ExMemberSchema = new Schema({
 }, { timestamps: true } )
 
 
-export const Message       = db.mongoose.model('Message', MessageSchema)
-export const VoiceActivity = db.mongoose.model('VoiceActivity', VoiceActivitySchema)
-export const ExMembers   = db.mongoose.model('ExMembers', ExMemberSchema)
+export const Message       = mongoose.model('Message', MessageSchema)
+export const VoiceActivity = mongoose.model('VoiceActivity', VoiceActivitySchema)
+export const ExMembers     = mongoose.model('ExMembers', ExMemberSchema)

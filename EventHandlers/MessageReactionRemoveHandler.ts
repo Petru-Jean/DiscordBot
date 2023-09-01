@@ -3,7 +3,7 @@ import { EventHandler } from "../EventHandler";
 import { Message }      from "../DBSchemas"
 
 /**
- * @classdesc Records message reaction removals in the database
+ * @classdesc Removes existing reactions from user messages in the database
  */
 
 export class MessageReactionRemoveHandler extends EventHandler

@@ -80,6 +80,7 @@ export class StatsCommandHandler extends CommandHandler
             let vcMostTimeSpent   = data[2][0] ?? 0
             let longestVcSession  = data[3][0] ?? 0
 
+
             // Fetch user data for every user 
             await Promise.allSettled([
                 // User who sent most messages
@@ -89,7 +90,7 @@ export class StatsCommandHandler extends CommandHandler
                 this.client.cache.GetGuildUser(guildId, vcMostTimeSpent ? vcMostTimeSpent._id : 0),
                 
                 // User who had the longest VC sesion
-                this.client.cache.GetGuildUser(guildId, longestVcSession ? mostMsgSent.user_id : 0)
+                this.client.cache.GetGuildUser(guildId, longestVcSession ? longestVcSession.user_id : 0)
             ]).then((users : any) =>
             {    
                 users[0] = users[0].value 
@@ -99,7 +100,7 @@ export class StatsCommandHandler extends CommandHandler
                 let textMostMsg    = users[0] ? ( `${users[0].nickname ?? users[0].username}  ${mostMsgSent.count}`) : "0"
                 let textMostVcTime = users[1] ? (` ${users[1].nickname ?? users[1].username}  ${this.msToTime(vcMostTimeSpent.count)}`) : "0"
                 let textLongestVc  = users[2] ? (` ${users[2].nickname ?? users[2].username}  ${this.msToTime(longestVcSession.duration_in_ms)}`) : "0"
-                    
+                   
                 statsText = `Afisez stats pentru **server**\n`
                 statsText += `Mesaje trimise în total:       **${msgCount}**\n`
                 statsText += `Cele mai multe mesaje trimise: **${textMostMsg}**\n`
@@ -146,17 +147,16 @@ export class StatsCommandHandler extends CommandHandler
             let messageCount = data[1].value
             
             // Check if user spent time on VoiceChat
-            let vcTimeSpent  = data[2].value.length ? data[2].value[0] : 0
-
+            let vcTimeSpent  = data[2].value.length ? data[2].value[0].TotalTimeSpent : 0
+  
             if (guildUser)
             {
                 // Date when bot started running [30 Aug 2023]
-                let botStartDate = 1693400400000
+                let  botStartDate = 1693400400000
                 
-                let joinDate     = 1693400400000
-                let daysInGuild  = Math.max(1, Date.now() - joinDate)
-                
-                let dailyMsgCount  = Math.round(messageCount / daysInGuild)
+                let daysInGuild  = Math.floor(Math.max(1, (Date.now() - botStartDate)/86400000))
+
+                let dailyMsgCount  = (messageCount / daysInGuild).toFixed(2)
                 let dailyVoiceTime = vcTimeSpent  / daysInGuild
                 
                 statsText = `Se afiseaza stats pentru  **${guildUser.nickname.length ? guildUser.nickname : guildUser.username}** \n`;

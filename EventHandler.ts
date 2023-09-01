@@ -1,5 +1,4 @@
 import { Client, GatewayDispatchEvent } from "./Client";
-const db = require('./db')
 
 export abstract class EventHandler
 {
