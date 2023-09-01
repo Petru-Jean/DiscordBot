@@ -2,8 +2,8 @@ require('dotenv').config();
 require('console-stamp')(console, '[HH:MM:ss.l]');
 
 import { ActivityBot } from "./ActivityBot";
-import { Client, ClientConfig }  from '../Client'
-import { Rest }                  from '../Rest'
+import { Client, ClientConfig }  from '../../src/Client'
+import { Rest }                  from '../../src/Rest'
 
 import * as Redis from 'redis';
 

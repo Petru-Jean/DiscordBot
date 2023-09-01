@@ -1,7 +1,7 @@
 const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') })
 
-import { Client } from "../Client";
+import { Client } from "../../src/Client";
 
 import { CommandHandler      } from "./CommandHandler";
 import { StatsCommandHandler } from "./CommandHandlers/StatsCommandHandler";

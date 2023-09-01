@@ -11,5 +11,5 @@ RUN npm install --production
 
 COPY . .
 
-WORKDIR /app/Example bot implementation
+WORKDIR /app/Examples/Activity Bot
 CMD ["node", "App.js"]

@@ -1,5 +1,5 @@
 // import { GatewayDispatchEvent } from "./DiscordBotAPI";
-import { Client } from "../Client";
+import { Client } from "../../src/Client";
 import { EventHandler } from "./EventHandler";
 import * as Redis from 'redis';
 

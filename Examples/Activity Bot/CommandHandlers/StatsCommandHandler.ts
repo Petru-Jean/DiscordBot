@@ -1,9 +1,9 @@
-import { Client, GatewayDispatchEvent } from "../../Client";
-import { EventHandler } from "../EventHandler";
-import { RequestOptions } from "../../Rest";
-import { Message, VoiceActivity } from "../DBSchemas";
-import { CommandHandler } from "../CommandHandler";
-import { GuildUser } from "../../Cache";
+import { Client, GatewayDispatchEvent } from "../../..//src/Client";
+import { EventHandler } from "../../Activity Bot/EventHandler";
+import { RequestOptions } from "../../../src/Rest";
+import { Message, VoiceActivity } from "../../Activity Bot/DBSchemas";
+import { CommandHandler } from "../../Activity Bot/CommandHandler";
+import { GuildUser } from "../../../src/Cache";
 
 
 /**

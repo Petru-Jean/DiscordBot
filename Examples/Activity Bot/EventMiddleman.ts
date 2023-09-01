@@ -1,7 +1,7 @@
 import { EventHandler }   from "./EventHandler";
 import { CommandHandler } from "./CommandHandler";
-import { Client, GatewayDispatchEvent }  from '../Client'
-import { GuildUser } from "../Cache";
+import { Client, GatewayDispatchEvent }  from '../../src/Client'
+import { GuildUser } from "../../src/Cache";
 
 
 export class EventMiddleman

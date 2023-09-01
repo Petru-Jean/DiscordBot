@@ -1,4 +1,4 @@
-import { Client, GatewayDispatchEvent } from "../Client";
+import { Client, GatewayDispatchEvent } from "../../src/Client";
 
 export abstract class EventHandler
 {
