@@ -1,14 +1,19 @@
-import { Client } from "./Client";
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+
+import { Client } from "../Client";
 
 import { CommandHandler      } from "./CommandHandler";
 import { StatsCommandHandler } from "./CommandHandlers/StatsCommandHandler";
 
-import { EventHandler } from "./EventHandler";
-import * as EventHandlers from './EventHandlers/EventHandlers'
+import { EventHandler }   from "./EventHandler";
+import * as EventHandlers from "./EventHandlers/EventHandlers"
 
 import { EventMiddleman } from "./EventMiddleman";
 
 var mongoose = require('mongoose')
+
+
 
 export class ActivityBot
 {

@@ -1,4 +1,4 @@
-import { GatewayDispatchEvent } from "../Client";
+import { GatewayDispatchEvent } from "../../Client";
 import { EventHandler  }  from "../EventHandler";
 import { VoiceActivity }  from '../DBSchemas'
 

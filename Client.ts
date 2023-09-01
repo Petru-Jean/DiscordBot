@@ -3,7 +3,7 @@ const EventEmitter = require('events')
 import { ShardCluster } from "./ShardCluster"
 import { Rest }         from './Rest'
 import * as Redis from 'redis';
-import { ClientCache } from "./ClientCache"
+import { Cache } from "./Cache"
 
 export interface ClientConfig
 {
@@ -50,24 +50,37 @@ export class Client extends EventEmitter
     private cluster: ShardCluster
     public  rest:    Rest
     
-    public  cache:   ClientCache
+    public  cache:   Cache
     
     constructor(clientConfig : ClientConfig, redisClient : Redis.RedisClientType, rest : Rest)
     {
         super()
 
         this.cluster     = new ShardCluster(this)
-        this.cache       = new ClientCache(redisClient)
+        this.cache       = new Cache(redisClient)
         
         this.rest        = rest
 
         this.clientConfig = clientConfig
     }
 
-    public Start(shards : number = 0)
+    private async ConnectToRedis()
     {
-
-        this.cluster.Create(shards)
+        this.cache.redisClient.on('error', (err: any) => { throw new Error(err) });
+    
+        return this.cache.redisClient.connect()
+        .catch((error: any) =>
+        {
+            throw new Error(`Redis error: ${error}`)
+        });
+    }
+    
+    public Start(shards: number = 0)
+    {
+        this.ConnectToRedis().then(() =>
+        {
+            this.cluster.Create(shards)
+        })
     }
 
 }

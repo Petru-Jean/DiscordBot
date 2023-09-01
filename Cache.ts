@@ -1,4 +1,3 @@
-import { test } from 'node:test'
 import * as Redis from 'redis'
 
 export interface GuildUser
@@ -12,7 +11,7 @@ export interface GuildUser
     joinDate:  number
 }
 
-export class ClientCache
+export class Cache
 {
     public redisClient: Redis.RedisClientType 
     
@@ -25,13 +24,17 @@ export class ClientCache
     {
         return new Promise(async (resolve, reject) =>
         {
+            const redisKey = `guild#${guildId}:user#${userId}`
+            
+            await this.redisClient.exists(redisKey).then((exists: number) =>
+            {         
+                if (!exists)
+                    return reject(`User data for key ${redisKey} does not exist`)            
+            })
+            .catch((error: any) => reject(error))
+
             this.redisClient.hmGet(`guild#${guildId}:user#${userId}`, ["userId", "guildId", "username", "nickname", "joinDate"]).then((data) =>
-            {
-                if (!data[0])
-                {
-                    return reject(undefined)
-                }
-                
+            {     
                 return resolve({
                     userId: data[0],
                     guildId: data[1],

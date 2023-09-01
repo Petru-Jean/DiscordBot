@@ -1,9 +1,9 @@
-import { Client, GatewayDispatchEvent } from "../Client";
+import { Client, GatewayDispatchEvent } from "../../Client";
 import { EventHandler } from "../EventHandler";
-import { RequestOptions } from "../Rest";
+import { RequestOptions } from "../../Rest";
 import { Message, VoiceActivity } from "../DBSchemas";
 import { CommandHandler } from "../CommandHandler";
-import { GuildUser } from "../ClientCache";
+import { GuildUser } from "../../Cache";
 
 
 /**

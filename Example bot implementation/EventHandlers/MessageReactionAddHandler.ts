@@ -1,34 +1,34 @@
-import { GatewayDispatchEvent } from "../Client";
+import { GatewayDispatchEvent } from "../../Client";
 import { EventHandler } from "../EventHandler";
 import { Message }      from "../DBSchemas"
 
 /**
- * @classdesc Removes existing reactions from user messages in the database
+ * @classdesc Records reactions to user messages in the database
  */
-
-export class MessageReactionRemoveHandler extends EventHandler
+export class MessageReactionAddHandler extends EventHandler
 {
     constructor()
     {
-        super(GatewayDispatchEvent.MESSAGE_REACTION_REMOVE)
+        super(GatewayDispatchEvent.MESSAGE_REACTION_ADD)
     }
 
     OnEvent(event: any)
     {
+
         Message.findOneAndUpdate(
         {
             message_id: event.d.message_id
         },
         {
-            $pull: {
+            $push: {
                 reacts: event.d.emoji.name
             }
         }
         ).then(
             (success : any) => { },
-            (error   : any) => { console.log("Failed to remove message reaction: " + error) }
+            (error   : any) => { console.log("Failed to save message reaction: " + error )  }
         )
-        
+
     }
     
 }
