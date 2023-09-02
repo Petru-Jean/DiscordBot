@@ -13,8 +13,6 @@ import { EventMiddleman } from "./EventMiddleman";
 
 var mongoose = require('mongoose')
 
-
-
 export class ActivityBot
 {
     public client:    Client
@@ -29,10 +27,11 @@ export class ActivityBot
 
         const eventHandlers : Array<EventHandler> =
         [
-            new EventHandlers.MessageCreateHandler(),
-            new EventHandlers.VoiceActivityHandler(),
-            new EventHandlers.MessageReactionAddHandler(),
-            new EventHandlers.MessageReactionRemoveHandler()
+            new EventHandlers.MessageCreateHandler(client),
+            new EventHandlers.VoiceActivityHandler(client),
+            new EventHandlers.MessageReactionAddHandler(client),
+            new EventHandlers.MessageReactionRemoveHandler(client),
+            new EventHandlers.MemberLeaveHandler(client)
         ]
 
         this.middleman = new EventMiddleman(client, eventHandlers, commandHandlers)
@@ -41,6 +40,8 @@ export class ActivityBot
     
     public async Init()
     {
+        console.log("Initializing Mongoose connection...")
+        
         await mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
         .catch((error: any) => {
             return Promise.reject(new Error(`Failed to connect to mongoose: ${error}`))

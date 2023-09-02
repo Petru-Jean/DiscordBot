@@ -1,20 +1,19 @@
-import { GatewayDispatchEvent } from "../../../src/Client";
+import { Client, GatewayDispatchEvent } from "../../../src/Client";
 import { EventHandler } from "../EventHandler";
 import { Message }      from "../DBSchemas"
 
 /**
- * @classdesc Records reactions to user messages in the database
+ * @classdesc Records reactions to user messages
  */
 export class MessageReactionAddHandler extends EventHandler
 {
-    constructor()
+    constructor(client : Client)
     {
-        super(GatewayDispatchEvent.MESSAGE_REACTION_ADD)
+        super(client, GatewayDispatchEvent.MESSAGE_REACTION_ADD)
     }
 
     OnEvent(event: any)
     {
-
         Message.findOneAndUpdate(
         {
             message_id: event.d.message_id

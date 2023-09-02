@@ -3,10 +3,12 @@ import { Client, GatewayDispatchEvent } from "../../src/Client";
 export abstract class EventHandler
 {
     eventType: GatewayDispatchEvent
+    client:    Client
     
-    constructor(eventType : GatewayDispatchEvent)
+    constructor(client : Client, eventType : GatewayDispatchEvent)
     {
         this.eventType = eventType
+        this.client    = client
     }
 
     GetEventType() : GatewayDispatchEvent

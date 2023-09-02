@@ -1,12 +1,12 @@
-import { GatewayDispatchEvent } from "../../../src/Client";
+import { Client, GatewayDispatchEvent } from "../../../src/Client";
 import { EventHandler } from "../EventHandler";
 import { Message }      from "../DBSchemas"
 
 export class MessageCreateHandler extends EventHandler
 {
-    constructor()
+    constructor(client : Client)
     {
-        super(GatewayDispatchEvent.MESSAGE_CREATE)
+        super(client, GatewayDispatchEvent.MESSAGE_CREATE)
     }
 
     OnEvent(event: any)

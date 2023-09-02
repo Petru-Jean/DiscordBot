@@ -23,5 +23,7 @@ const config: ClientConfig =
 
 const client = new Client(config, redis, new Rest())
 
-new ActivityBot(client).Init()
-client.Start()
+new ActivityBot(client).Init().then(() => {
+    client.Start()
+})
+

@@ -55,7 +55,12 @@ export const ExMemberSchema = new Schema({
     join_date: {
         type: Date,
         required: true
+    },
+    name: {
+        type: String,
+        required: true
     }
+    
 }, { timestamps: true } )
 
 

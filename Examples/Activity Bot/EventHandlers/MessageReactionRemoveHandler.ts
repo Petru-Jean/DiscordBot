@@ -1,16 +1,16 @@
-import { GatewayDispatchEvent } from "../../../src/Client";
+import { Client, GatewayDispatchEvent } from "../../../src/Client";
 import { EventHandler } from "../EventHandler";
 import { Message }      from "../DBSchemas"
 
 /**
- * @classdesc Removes existing reactions from user messages in the database
+ * @classdesc Removes existing reactions from user messages
  */
 
 export class MessageReactionRemoveHandler extends EventHandler
 {
-    constructor()
+    constructor(client : Client)
     {
-        super(GatewayDispatchEvent.MESSAGE_REACTION_REMOVE)
+        super(client,GatewayDispatchEvent.MESSAGE_REACTION_REMOVE)
     }
 
     OnEvent(event: any)

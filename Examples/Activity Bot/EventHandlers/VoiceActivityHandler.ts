@@ -1,4 +1,4 @@
-import { GatewayDispatchEvent } from "../../../src/Client";
+import { Client, GatewayDispatchEvent } from "../../../src/Client";
 import { EventHandler  }  from "../EventHandler";
 import { VoiceActivity }  from '../DBSchemas'
 
@@ -16,9 +16,9 @@ export class VoiceActivityHandler extends EventHandler
 {
     voiceSession: Map<number, VoiceActivity>
 
-    constructor()
+    constructor(client : Client)
     {
-        super(GatewayDispatchEvent.VOICE_STATE_UPDATE)
+        super(client, GatewayDispatchEvent.VOICE_STATE_UPDATE)
 
         this.voiceSession = new Map<number, VoiceActivity>()
     }
